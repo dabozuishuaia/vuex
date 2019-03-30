@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <son @passv="getv"></son>
+    </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+    Vue.component('son', {
+        template: `<div>
+            子元素要将 sonmsg 给父元素： <button @click="passVal">传递数据到父组件</button>
+        </div>`,
+        data() {
+            return {
+                sonmsg: 'sonMSG'
+            }
+        },
+        methods: {
+            passVal() {
+                // 子元素会将参数传给元素中的事件： passv， 并且触发这个事件
+                this.$emit('passv', this.sonmsg)
+            }
+        }
+    })
+    new Vue({
+        el: '#app',
+        methods: {
+            getv(value) {
+                // value 就是子组件传递过来数据
+                console.log(value)
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <coma></coma>
+        <comb></comb>
+    </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+    // 创建一个公共的 vue 实例
+    var vm = new Vue()
+    Vue.component('coma', {
+        template: `<div>coma:<button @click="passtob">向B传参数</button></div>`,
+        data() {
+            return {
+                msga: 'MSGA'
+            }
+        },
+        methods: {
+            passtob() {
+                // 通过公用 bus 进行传参
+                vm.$emit('passv', this.msga)
+            }
+        }
+    })
+    Vue.component('comb', {
+        template: `<div>comb:</div>`,
+        mounted() {
+            vm.$on('passv', function(value){
+                console.log(value)
+            })
+        }
+    })
+    new Vue({
+        el: '#app'
+    }) 
+</script>
+</html>

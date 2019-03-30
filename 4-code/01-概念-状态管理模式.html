@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{num}}</p>
+        <button @click="add">点我++</button>
+    </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            num: 1
+        },
+        methods: {
+            add() {
+                this.num ++
+            }
+        }
+    })
+</script>
+</html>
+<!-- 
+    这个结构可以理解为最简单的一种状态管理：
+        state: 驱动应用的数据源（管理数据）
+        view:  以声明方式将 state 映射到视图（显示数据）
+        actions: 响应在 view 上的用户输入导致的状态变化（改变数据）
+ -->

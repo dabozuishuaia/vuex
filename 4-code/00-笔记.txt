@@ -1,0 +1,139 @@
+01-渐进式 javascript 框架：
+    概念：渐进式
+        过程： 
+            a. 直接在 html 页面上使用 vue
+            b. 引入了 vue-cli
+            c. 引入了 vue-router
+            d. 引入了 axios 
+            e. 引入了 vuex
+        总结：vue 的全家桶
+02-vuex 
+    是什么：
+        是为 vuejs 准备的一个状态管理模式。
+    有什么用：
+        为大型单页应用共享状态
+    怎么用：
+        安装：
+            直接下载
+            CDN
+            NPM
+        使用步骤：
+            1）创建一个 vue 项目
+            2）通过 npm 安装 vuex：
+                npm i vuex -S
+            3）引用：
+                import vue from 'vue'
+                import vuex from 'vuex'
+                vue.use(vuex)
+    概念： 
+        状态管理模式：
+            将一个组件的结构分为三个部分：
+                state: 管理状态
+                view：显示 state
+                actions: 改变状态
+                问题：单向数据流结构很容易被破坏
+        vuex 中的状态管理模式：
+            将结构分为四个部分：
+                vue component: 显示状态
+                actions: 操作 mutations     |
+                mutations: 改变状态         |  ===> vuex
+                state: 管理状态             |
+        总结：
+            1） vuex 在使用时会引入大量的概念和框架
+            2） 一般不建议使用 vuex，除非是大型 的单页应用
+03-概念-共享状态：共享状态：
+    组件：
+        父组件将状态传递给子组件
+            步骤：
+                1）父传
+                    父组件在 data 定义一个数据，通过自定义属性传递给子组件
+                2）子接
+                    在子组件中通过 props 来接收父组件传递的数据
+        子组件将状态传递给父组件
+            步骤：
+                1）子传
+                    在子组件中通过一个方法进行传递
+                        子组件：
+                            this.$emit('自定义事件名', '参数')
+                2）父接    
+                    在父组件中通过自定义事件名，给子组件绑定一个父组件中的事件：
+                        html
+                            <div id="app">
+                                <son @自定义事件名="getVal"></son>
+                            </div>
+
+                        {
+                            methods: {
+                                getVal() {
+                                }
+                            }
+                        }
+        兄弟之间传参数：
+            步骤：
+                1）创建一个公用的 eventbus
+                    var vm = new Vue()
+                2）在 a 组件通过公用的 eventbus 传参
+                    vm.$emit('passv', this.msg)
+                3）在 b 组件通过公用的 eventbus 接收参数
+                    vm.$on('passv', function(value){})
+04-vuex-中的核心概念
+    store: 仓库（用来保存 state）
+    state: 状态
+        作用：管理当前仓库中的所有状态
+        定义：
+            var store = new Vuex.store({
+                state: {
+                    num: 1
+                }
+            })
+        使用：
+            方式一：
+                直接通过 this.$store.state.num
+                缺点：每次使用代码太长了
+            方式二：
+                使用 mapState 来将 store 中的属性映射到计算属性中
+                缺点：如果当前组件中有自己的计算属性，不方便设置
+            方式三：
+                使用 mapState 来将 store 中的属性映射到计算属性中，但是不完全占用计算属性
+            方式四：
+                使用 mapState 来将 store 中的属性映射到计算属性中，传入对数据为数组
+    mutations: 
+        作用：修改状态
+        定义：
+            var store = new Vuex.store({
+                state: {
+                    num: 1
+                },
+                mutations: {
+                    add(state) {
+                        state.num ++
+                    }
+                }
+            })
+        使用：
+            方式一：
+                直接通过 commit 来调用 mutations 中的方法
+            方式二：
+                直接通过 mapMutatsion 来调用（可以传入对象&数组）
+        载荷（mutaions 中方法的传参）：
+            1.0 直接传递参数：
+                // 使用 mutations 中的方法
+                <button @click="add(11)">++</button>
+                // mutations 中方法定义
+                add(state, index) {
+                    state.num = state.num + index
+                }
+    actions:
+        作用：当用户操作组件时，可以调用 actions 中的方法， actions 的使用是用来操作 mutations
+        与 mutaions 的对比：
+            相同点：
+                都是方法
+            不同点：
+                actions 中可以执行异步方法, mutaions 中只能执行同步方法
+                actions 中操作的结果只能交给 mutations
+                
+
+        
+
+        
+        
